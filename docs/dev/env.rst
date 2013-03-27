@@ -336,4 +336,13 @@ Python interpreter for Unix-like operating systems. It has the following feature
 Pylint
 ------
 
-Pylint is a tool for doing some static analysis in Python code.
+Pylint is a tool for doing some static analysis in Python code. Static analysis
+is determining qualities and properties of code without running it.
+
+The static analysis that Pylint does is useful for finding some types of
+problems like misspellings, interacting with variables that haven't been
+defined and style errors. These style errors include smells and style issues,
+such as PEP 8 violations.
+
+Pylint does not find all the problems with your code, but it can help with
+style issues and silly mistakes.
