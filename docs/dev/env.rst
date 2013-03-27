@@ -346,3 +346,57 @@ such as PEP 8 violations.
 
 Pylint does not find all the problems with your code, but it can help with
 style issues and silly mistakes.
+
+
+Editor Integration
+^^^^^^^^^^^^^^^^^^
+
+Integration with the editor provides immediate feedback and eliminate the 
+work to navigate to the problem code.
+
+vim integration is performed using the tool Syntastic.  
+
+Installation of Syntastic is covered `here <https://github.com/scrooloose/syntastic/>`_
+
+Add this to your .vimrc:
+        set statusline+=%#warningmsg#
+        set statusline+=%{SyntasticStatuslineFlag()}
+        set statusline+=%*
+        map <F6> :SyntasticCheck<CR>
+        let g:syntastic_python_checkers=['pylint']
+
+Syntastic will run pylint every time you save the file, or if you hit the
+function key you mapped to SyntasticCheck.  It will create a thin vertical bar
+on the left of the screen with colored arrows next to lines of code with
+issues.   An explanation of the issue can be seen on the statusline by moving
+your cursor to the line in question.
+
+
+Disabling and Enabling Messages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sometimes code will violate a check for legitimate reasons.  This could be due
+to magical code (like referencing a variable with locals() so Pylint cannot
+tell that it is referenced).  Or it could be because the developer has decided
+in a particular case the violation is merited (such as a stdout report header
+line > 80 characters).  In these cases there are multiple ways to disable the
+message:
+
+method #1 - disable on command line
+
+    pylint -d W0612 sample.py 
+    pylint -e W0612 sample.py 
+
+method #2 - disable on line of code
+
+    cntry = 'CO' #pylint: disable=W0612
+
+method #3 - disable around the lines of code
+
+    #pylint: disable=W0612
+    state = 'CO'
+    print 'No data found for cntry: %(cntry)s and state: %(state)s' % locals()
+    #pylint: enable=W0612
+
+method #4 - disable within the config file
+    disable=W0612
